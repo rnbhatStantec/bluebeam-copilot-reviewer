@@ -1,0 +1,39 @@
+{
+  "rules": [
+    {
+      "id": "check-dimensions",
+      "name": "Check Dimensions",
+      "description": "Verify all dimensions are clearly labeled",
+      "severity": "high",
+      "prompt": "Verify that all dimensions are clearly labeled and consistent throughout the document"
+    },
+    {
+      "id": "check-general-notes",
+      "name": "General Notes",
+      "description": "Ensure general notes are legible and complete",
+      "severity": "medium",
+      "prompt": "Check that all general notes are legible, complete, and follow standard conventions"
+    },
+    {
+      "id": "check-code-compliance",
+      "name": "Code Compliance",
+      "description": "Verify compliance with building codes",
+      "severity": "high",
+      "prompt": "Review for compliance with IBC, ADA, local building codes, and other applicable standards"
+    },
+    {
+      "id": "check-coordination",
+      "name": "Coordination",
+      "description": "Check coordination between disciplines",
+      "severity": "high",
+      "prompt": "Identify any coordination issues or conflicts between architectural, structural, and MEP elements"
+    },
+    {
+      "id": "check-materials",
+      "name": "Material Specifications",
+      "description": "Verify material specifications are complete",
+      "severity": "medium",
+      "prompt": "Check that all materials are properly specified with grades, finishes, and other relevant details"
+    }
+  ]
+}

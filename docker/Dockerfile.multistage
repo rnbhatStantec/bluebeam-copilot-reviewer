@@ -1,0 +1,31 @@
+# Use base image
+FROM node:18-alpine AS base
+RUN apk add --no-cache curl
+
+# Dependencies
+FROM base AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+
+# Production build
+FROM base AS prod
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY src ./src
+COPY config ./config
+RUN mkdir -p uploads reviews logs
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/health || exit 1
+CMD ["node", "src/server.js"]
+
+# Development build
+FROM deps AS dev
+WORKDIR /app
+RUN npm install --save-dev nodemon
+COPY . .
+RUN mkdir -p uploads reviews logs
+EXPOSE 3000
+CMD ["npm", "run", "dev"]

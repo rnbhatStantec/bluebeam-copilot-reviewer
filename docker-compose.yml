@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.multistage
+      target: prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - AI_MODEL=claude
+      - LOG_LEVEL=info
+    volumes:
+      - ./uploads:/app/uploads
+      - ./reviews:/app/reviews
+      - ./config:/app/config
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.multistage
+      target: prod
+    environment:
+      - NODE_ENV=production
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - AI_MODEL=claude
+      - LOG_LEVEL=info
+    volumes:
+      - ./reviews:/app/reviews
+      - ./config:/app/config
+    depends_on:
+      - app
+    command: node src/scheduler.js
+    restart: unless-stopped

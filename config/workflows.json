@@ -1,0 +1,26 @@
+{
+  "workflows": [
+    {
+      "name": "daily-morning-review",
+      "description": "Daily review of new architectural documents",
+      "schedule": "0 9 * * *",
+      "input": "./bluebeam-exports",
+      "output": "./reviews/daily",
+      "template": "architecture",
+      "detailLevel": "standard",
+      "notifyEmail": "team@example.com",
+      "enabled": false
+    },
+    {
+      "name": "weekly-structural-review",
+      "description": "Weekly structural drawing review",
+      "schedule": "0 10 * * 1",
+      "input": "./bluebeam-exports/structural",
+      "output": "./reviews/structural",
+      "template": "structural",
+      "detailLevel": "detailed",
+      "notifyEmail": "structural-team@example.com",
+      "enabled": false
+    }
+  ]
+}
